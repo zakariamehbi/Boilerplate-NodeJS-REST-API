@@ -234,7 +234,7 @@
 		"no-mixed-operators": "error",
 		"no-multi-assign": "error",
 		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
-		"no-negated-condition": "error",
+		"___disabled___no-negated-condition": "",
 		"no-nested-ternary": "error",
 		"no-new-object": "error",
 		"___disabled___no-plusplus": "",
@@ -262,7 +262,6 @@
 		"object-curly-newline": [
 			"error",
 			{
-				"multiline": true,
 				"ObjectExpression": {
 					"multiline": true,
 					"minProperties": 3

@@ -1,5 +1,5 @@
 const express = require('express')
-const logger = require('morgan')
+const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const compress = require('compression')
@@ -16,8 +16,42 @@ const app = express()
 
 if (env === 'development') {
 	// request logging. dev: console | production: file
-	app.use(logger('dev'))
+	app.use(morgan('dev'))
 }
+
+/**
+ * We've used Morgan as a middleware twice.
+ * The reason is that we're using morgan to separate our
+ * logs to two different write streams based on the status
+ * code. Morgan provises the ability to skip logs using a
+ * skip function passed in the options argument.
+ * Using that we log the requests with statusCode < 400 to the stdout
+ * and requests with statusCode >= 400 to the stderr.
+ * By using Morgan this way we have ensured that all out
+ * failed requests will be in a separate file and all the
+ * successful requests will a be in another file.
+ * Now whenever we want to check for failed requests on our
+ * server, we can simply go and view the specific file for
+ * it without having to go through the other irrelevant logs.
+ * ! Note - Morgan provides many more formats for logging. Don't use dev format in production environments.
+ */
+app.use(
+	morgan('dev', {
+		skip(req, res) {
+			return res.statusCode < 400
+		},
+		stream: process.stderr
+	})
+)
+
+app.use(
+	morgan('dev', {
+		skip(req, res) {
+			return res.statusCode >= 400
+		},
+		stream: process.stdout
+	})
+)
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json())

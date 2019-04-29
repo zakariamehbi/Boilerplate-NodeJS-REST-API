@@ -13,7 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"bcrypt": "^3.0.5",
+		"bcrypt": "^3.0.6",
 		"bluebird": "3.5.4",
 		"body-parser": "1.18.3",
 		"compression": "1.7.4",
@@ -31,18 +31,19 @@
 		"jsonwebtoken": "^8.5.1",
 		"method-override": "^3.0.0",
 		"mongodb": "^3.2.3",
-		"mongoose": "5.4.23",
-		"morgan": "1.9.1",
+		"mongoose": "5.5.2",
+		"morgan": "^1.9.1",
 		"nodemailer": "^6.1.0",
-		"validator": "^10.11.0"
+		"validator": "^10.11.0",
+		"winston": "^3.2.1"
 	},
 	"devDependencies": {
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb-base": "^13.1.0",
 		"eslint-config-prettier": "^4.1.0",
 		"eslint-plugin-html": "^5.0.3",
-		"eslint-plugin-import": "^2.16.0",
+		"eslint-plugin-import": "^2.17.1",
 		"eslint-plugin-prettier": "^3.0.1",
-		"prettier": "^1.16.4"
+		"prettier": "^1.17.0"
 	}
 }

@@ -6,13 +6,14 @@ Promise = require('bluebird')
 const { port, env } = require('./config/config')
 const mongoose = require('./config/mongoose')
 const app = require('./config/express')
+const logger = require('./config/logger')
 
 // open mongoose connection
 mongoose.connect()
 
 // listen for connections
 app.listen(port, () => {
-	console.info(`server started on port ${port} (${env})`)
+	logger.info(`server started on port ${port} (${env})`)
 })
 
 module.exports = app

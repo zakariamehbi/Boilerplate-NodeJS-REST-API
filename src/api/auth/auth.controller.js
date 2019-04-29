@@ -9,7 +9,7 @@ exports.login = (req, res, next) => {
 		.then(user => {
 			const token = jwt.sign({ _id: user._id }, config.jwtSecret)
 
-			return res.json(token);
+			return res.json(token)
 		})
 		.catch(e => {
 			next(e)

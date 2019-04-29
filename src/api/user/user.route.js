@@ -14,14 +14,14 @@ const router = express.Router()
  * router.use(authMiddleware)
  *
  * router.route('/')
- * 	.all((req, res, next) => {
- * 		authMiddleware(req, res, next)
- * 		next()
- * 	})
+ * .all((req, res, next) => {
+ * authMiddleware(req, res, next)
+ * next()
+ * })
  *
  * router
- *	.route('/')
- *	.get(authMiddleware, userCtrl.list)
+ * .route('/')
+ * .get(authMiddleware, userCtrl.list)
  */
 
 router.use(authMiddleware)

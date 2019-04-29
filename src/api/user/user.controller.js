@@ -63,7 +63,7 @@ exports.update = (req, res, next) => {
 exports.list = (req, res, next) => {
 	const { limit = 50, skip = 0 } = req.query
 
-	User.list({limit, skip})
+	User.list({ limit, skip })
 		.then(users => res.json(users))
 		.catch(e => next(e))
 }

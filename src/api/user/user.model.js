@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 const Promise = require('bluebird')
 const mongoose = require('mongoose')
 const httpStatus = require('http-status')
@@ -19,7 +20,7 @@ const UserSchema = new mongoose.Schema({
 		validate: {
 			validator: validator.isEmail,
 			// eslint-disable-next-line no-undef
-			message: "{VALUE} is not a valid email"
+			message: '{VALUE} is not a valid email'
 			/*
 			 * Equivalent
 			 * validator: value => {
@@ -78,9 +79,7 @@ UserSchema.statics = {
 
 	list({ skip = 0, limit = 50 } = {}) {
 		return this.find()
-			.sort({
-				createdAt: -1
-			})
+			.sort({ createdAt: -1 })
 			.skip(Number(skip))
 			.limit(Number(limit))
 			.exec()
@@ -96,10 +95,10 @@ UserSchema.statics = {
 				// https://stackoverflow.com/questions/13023361/how-does-node-bcrypt-js-compare-hashed-and-plaintext-passwords-without-the-salt
 				bcrypt.compare(password, user.password, (err, res) => {
 					if (res) {
-						console.log("resolve")
+						console.log('resolve')
 						resolve(user)
 					} else {
-						console.log("reject")
+						console.log('reject')
 						reject(err)
 					}
 				})
@@ -111,19 +110,24 @@ UserSchema.statics = {
 /**
  * Pre-save hooks
  */
-UserSchema.pre('save', function (next) {
-	var user = this;
+UserSchema.pre('save', next => {
+	if (this.isModified('password')) {
+		bcrypt.genSalt(10, (err, salt) => {
+			if (err) {
+				console.log(err)
+			} else {
+				bcrypt.hash(this.password, salt, (err2, hash) => {
+					if (err2) {
+						console.log(err2)
+					}
 
-	if (user.isModified("password")) {
-		bcrypt.genSalt(10, function (err, salt) {
-			bcrypt.hash(user.password, salt, function (err, hash) {
-				user.password = hash;
-				next();
-			});
-		});
-	} else {
-		next();
+					this.password = hash
+				})
+			}
+		})
 	}
+
+	return next()
 })
 
 module.exports = mongoose.model('User', UserSchema)
